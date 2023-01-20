@@ -1,5 +1,5 @@
 # Use the official InfluxDB image as the base image
-FROM influxdb:latest
+FROM influxdb:1.8-alpine
 
 # Install Python and pip
 RUN apk update && \
