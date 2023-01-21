@@ -3,7 +3,7 @@ FROM influxdb:2.6-alpine
 
 # Install Python and pip
 RUN apk update && \
-    apk add python3 python3-dev=3.8 py3-pip=20.2 && \
+    apk add python3 python3-dev py3-pip && \
     ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /usr/src/app
