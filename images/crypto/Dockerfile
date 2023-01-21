@@ -1,10 +1,7 @@
 # Use the official InfluxDB image as the base image
 FROM influxdb:2.6-alpine
 
-# Install Python and pip
-RUN apk update && \
-    apk add python3 python3-dev py3-pip && \
-    ln -s /usr/bin/python3 /usr/bin/python
+RUN ls -al /usr/bin/
 
 WORKDIR /usr/src/app
 
