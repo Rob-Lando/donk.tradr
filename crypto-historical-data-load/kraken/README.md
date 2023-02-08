@@ -1,8 +1,6 @@
 # Sample Usage
 
 ```
-import sqlite3-loader
-
 pairs = {"XBT":"USD","ETH":"USD"}
 
 # initially create tables for all defined pairs and intervals in sqlite3 db and load historical csv data (if exists)
