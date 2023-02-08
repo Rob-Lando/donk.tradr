@@ -36,5 +36,5 @@ for pair in pairs.items():
 
 # Useful Links:
 
-Historical Data Download: https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data
+Historical Data Download: https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data<\br><\br>
 Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/operation/getOHLCData
