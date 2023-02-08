@@ -64,7 +64,9 @@ def append_latest_OHLC_data(pair,interval,sqlite3_dbpath):
     """
     For a given trading pair and interval, query the Kraken public api for OHLCVT data since the max unix timestamp
     from the corresponding table in the associated sqlite3 database. 
-    The corresponding table is assumed to be named as follows: <pair>_<interval> 
+    The corresponding table is assumed to be named as follows: <pair>_<interval>
+    
+    See for api documentation: https://docs.kraken.com/rest/#tag/Market-Data/operation/getOHLCData
 
     API returns 720 data points at most as a json response.
     The response is converted into a Pandas dataframe and appends all records with timestamp > pre existing max timestamp
@@ -179,6 +181,10 @@ def init_load(pair,sqlite3_dbpath,historical_file_path):
     """
     Function for initially creating and populating sqlite3 tables with OHLCVT data across multiple trading pairs/intervals
     from a historical csv file (if exists).
+    
+    See for Kraken's Google Drive w/ historical data files: 
+    https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data
+    
     If there is no historical csv file, then tables are initially created and will be empty.
 
     Tables in the db are created with the following naming convention by default:
