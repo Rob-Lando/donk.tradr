@@ -7,9 +7,9 @@ pairs = {"XBT":"USD","ETH":"USD"}
 
 # initially create tables for all defined pairs and intervals in sqlite3 db and load historical csv data (if exists)
 # tables will be created with the naming convention <pair>_<interval_in_minutes> (ex. ETHUSD_60)
-# historical csv files have the same naming convention. (ex. ETHUSD_60.csv contains ohlcvt "candlestick" data in 60 minute intervals)
+# historical csv files have the same naming convention. (ex. ETHUSD_60.csv contains ohlcvt "candlestick" data in 60 minute intervals for the ETHUSD trading pair)
 # historical files are assumed to exist in directories labeled by crypto symbol, and contain files across ultiple crypto/base_currency pairs and intervals. 
-# Meaning, ETH has its own folder, XBT has its own folder, etc... 
+# Meaning, ETH/ has its own folder, XBT/ has its own folder, etc... 
 # see actual function definitions in sqlite-loader.py for more details.
 
 
