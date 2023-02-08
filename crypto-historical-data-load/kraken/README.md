@@ -32,3 +32,9 @@ for pair in pairs.items():
     batch_incremental_load(pair = "".join(pair),
                             intervals = kraken_public_api_intervals,
                             sqlite3_dbpath = r"C:\sqlite_dbs\kraken_ohlcvt.db")
+```
+
+# Useful Links:
+
+Historical Data Download: https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data
+Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/operation/getOHLCData
