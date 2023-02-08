@@ -25,7 +25,7 @@ for pair in pairs.items():
     # incrementally load latest ohlcvt data to sqlite db via kraken public api
     # incremental code block can be run individually as much as needed to keep
     # database somewhat up to date, eventually i'd like to have this set up to 
-    # run on a schedule (perhaps with something like Airflow).
+    # run on a schedule (perhaps with something like Schtasks on Windows - no need for anything overkill).
 
     batch_incremental_load(pair = "".join(pair),
                             intervals = kraken_public_api_intervals,
