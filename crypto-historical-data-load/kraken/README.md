@@ -41,9 +41,9 @@ Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/o
 
   1.) Open your terminal and switch to the directory containing your Python script. Create a .exe file from your Python script by running the following in your terminal:
   
-      ```
-      pyinstaller <your_script>.py
-      ```
+        ```
+        pyinstaller <your_script>.py
+        ```
       
    This will create a 'dist' directory in the same location as your script, which will contain your newly created executable.
       
