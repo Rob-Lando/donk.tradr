@@ -41,4 +41,6 @@ Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/o
 
   - execute this command in command prompt as administrator:
 
+    ```
     schtasks /create /tn "kraken_sch" /tr "C:\Users\robla\python-projects\donk.tradr.local.testing\dist\kraken_sch.exe" /sc hourly /mo 1 /ru SYSTEM /f /WakeToRun
+    ```
