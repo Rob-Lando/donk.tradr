@@ -15,7 +15,7 @@ batch_initial_load(
                     pairs = pairs,
                     sqlite3_dbpath = r"C:\sqlite_dbs\kraken_ohlcvt.db",
                     historical_file_path =  rf"C:\kraken-historical-ohlcvt"
-                )
+                    )
 
 kraken_public_api_intervals = {21600,10080,1440,240,60,15,5,1}
 pairs = {"XBT":"USD","ETH":"USD"}
@@ -29,7 +29,8 @@ for pair in pairs.items():
 
     batch_incremental_load(pair = "".join(pair),
                             intervals = kraken_public_api_intervals,
-                            sqlite3_dbpath = r"C:\sqlite_dbs\kraken_ohlcvt.db")
+                            sqlite3_dbpath = r"C:\sqlite_dbs\kraken_ohlcvt.db"
+                            )
 ```
 
 # Useful Links:
