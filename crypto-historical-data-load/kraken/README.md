@@ -40,17 +40,17 @@ Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/o
 # Running as a scheduled task on Windows:
 
   1.) Open your terminal and switch to the directory containing your Python script. Create a .exe file from your Python script by running the following in your terminal:
-  
-        ```
-        pyinstaller <your_script>.py
-        ```
+
+```
+pyinstaller <your_script>.py
+```
       
    This will create a 'dist' directory in the same location as your script, which will contain your newly created executable.
       
   2.) execute this command in windows command prompt as administrator:
 
-    ```
-    schtasks /create /tn "<TASK_NAME>" /tr "<PATH_TO_EXECUTABLE>" /sc hourly /mo 1 /ru SYSTEM /f /WakeToRun
-    ```
+```
+schtasks /create /tn "<TASK_NAME>" /tr "<PATH_TO_EXECUTABLE>" /sc hourly /mo 1 /ru SYSTEM /f /WakeToRun
+```
     
    This will schedule your executable to run every hour on the hour, even waking the computer to run if it's connected to ac power and on sleep.
