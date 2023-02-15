@@ -289,8 +289,10 @@ def batch_incremental_load(pair,intervals,sqlite3_dbpath):
 
 def main(sqlite3_dbpath,pairs,historical_file_path,kraken_public_api_intervals):
 
-    if not sqlite3_dbpath.split(r"\\")[-1] in os.listdir():
+    if not (sqlite3_dbpath.split("\\")[-1] in os.listdir()):
         
+        print("\n\nDoing Initial historical load...\n\n")
+
         batch_initial_load(pairs = pairs,
                             sqlite3_dbpath = sqlite3_dbpath,
                             historical_file_path =  historical_file_path)
