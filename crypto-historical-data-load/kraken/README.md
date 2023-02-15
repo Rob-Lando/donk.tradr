@@ -36,3 +36,9 @@ for pair in pairs.items():
 
 Historical Data Download: https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data<br><br>
 Kraken Public API Documentation: https://docs.kraken.com/rest/#tag/Market-Data/operation/getOHLCData
+
+# Running as a scheduled task on Windows:
+
+  - execute this command in command prompt as administrator:
+
+    schtasks /create /tn "kraken_sch" /tr "C:\Users\robla\python-projects\donk.tradr.local.testing\dist\kraken_sch.exe" /sc hourly /mo 1 /ru SYSTEM /f /WakeToRun
