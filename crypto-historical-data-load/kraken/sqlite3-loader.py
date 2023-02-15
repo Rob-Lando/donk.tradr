@@ -1,9 +1,7 @@
 import pandas as pd
-import numpy as np
 import sqlite3
-import json
 import requests
-import zipfile
+import os
 from datetime import datetime
 
 
@@ -64,9 +62,7 @@ def append_latest_OHLC_data(pair,interval,sqlite3_dbpath):
     """
     For a given trading pair and interval, query the Kraken public api for OHLCVT data since the max unix timestamp
     from the corresponding table in the associated sqlite3 database. 
-    The corresponding table is assumed to be named as follows: <pair>_<interval>
-    
-    See for api documentation: https://docs.kraken.com/rest/#tag/Market-Data/operation/getOHLCData
+    The corresponding table is assumed to be named as follows: <pair>_<interval> 
 
     API returns 720 data points at most as a json response.
     The response is converted into a Pandas dataframe and appends all records with timestamp > pre existing max timestamp
@@ -116,6 +112,11 @@ def append_latest_OHLC_data(pair,interval,sqlite3_dbpath):
                 column = 'FORMATTED_TIME',
                 value = df.TIMESTAMP.apply(lambda x: datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S')),
                 allow_duplicates = False)
+
+        df.insert(loc = len(df.columns),
+                column = 'HIST_OR_API',
+                value = 1, # 1 to indicate API data
+                allow_duplicates = True)
         
         conn = sqlite3.connect(sqlite3_dbpath)
 
@@ -163,6 +164,11 @@ def load_historical_ohlcvt(sqlite3_dbpath,table_name,file_path):
                     value = "",
                     allow_duplicates = True)
 
+            chunk.insert(loc = len(chunk.columns),
+                    column = 'HIST_OR_API',
+                    value = 0, # 0 to indicate historical data
+                    allow_duplicates = True)
+
             chunk.to_sql(table_name, conn, if_exists='append', index=False)
 
             print(f"\nchunk copied to {sqlite3_dbpath}.{table_name}\n")
@@ -181,10 +187,6 @@ def init_load(pair,sqlite3_dbpath,historical_file_path):
     """
     Function for initially creating and populating sqlite3 tables with OHLCVT data across multiple trading pairs/intervals
     from a historical csv file (if exists).
-    
-    See for Kraken's Google Drive w/ historical data files: 
-    https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data
-    
     If there is no historical csv file, then tables are initially created and will be empty.
 
     Tables in the db are created with the following naming convention by default:
@@ -242,7 +244,8 @@ def init_load(pair,sqlite3_dbpath,historical_file_path):
                                         'CLOSE':            'real',
                                         'VWAP':             'real',
                                         'VOLUME':           'real',
-                                        'COUNT':            'integer'
+                                        'COUNT':            'integer',
+                                        'HIST_OR_API':      'integer'
                                         }
                         )
 
@@ -259,6 +262,7 @@ def init_load(pair,sqlite3_dbpath,historical_file_path):
                 print(e)
                 print(f"""\n\n{pair}_{interval} may not have an associated historical .csv file associated with it!!!\n\n
                             Double check {historical_file_path}!\n\n""")
+                raise
 
 def batch_initial_load(pairs,sqlite3_dbpath,historical_file_path):
 
@@ -281,3 +285,28 @@ def batch_incremental_load(pair,intervals,sqlite3_dbpath):
     for interval in intervals:
 
         append_latest_OHLC_data(pair = pair,interval = interval ,sqlite3_dbpath = sqlite3_dbpath)
+
+
+def main(sqlite3_dbpath,pairs,historical_file_path,kraken_public_api_intervals):
+
+    if not sqlite3_dbpath.split(r"\\")[-1] in os.listdir():
+        
+        batch_initial_load(pairs = pairs,
+                            sqlite3_dbpath = sqlite3_dbpath,
+                            historical_file_path =  historical_file_path)
+
+
+    for pair in pairs.items():
+
+        batch_incremental_load(pair = "".join(pair),
+                                intervals = kraken_public_api_intervals,
+                                sqlite3_dbpath = sqlite3_dbpath)
+        
+        
+
+if __name__ == '__main__':
+
+    main(sqlite3_dbpath = r".\kraken_ohlcvt_ETH_BTC_ONLY_test.db",
+        pairs = {"XBT":"USD","ETH":"USD"},
+        historical_file_path = r"C:\kraken-historical-ohlcvt",
+        kraken_public_api_intervals = {21600,10080,1440,240,60,15,5,1})
