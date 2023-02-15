@@ -287,16 +287,15 @@ def batch_incremental_load(pair,intervals,sqlite3_dbpath):
         append_latest_OHLC_data(pair = pair,interval = interval ,sqlite3_dbpath = sqlite3_dbpath)
 
 
-def main():
-
-    kraken_public_api_intervals = {21600,10080,1440,240,60,15,5,1}
-    pairs = {"XBT":"USD","ETH":"USD"}
+def main(sqlite3_dbpath,pairs,kraken_public_api_intervals):
 
     for pair in pairs.items():
 
         batch_incremental_load(pair = "".join(pair),
                                 intervals = kraken_public_api_intervals,
-                                sqlite3_dbpath = r"C:\Users\robla\python-projects\donk.tradr.local.testing\kraken_ohlcvt_test.db")
+                                sqlite3_dbpath = sqlite3_dbpath)
+        
+        
 
 if __name__ == '__main__':
 
@@ -305,4 +304,8 @@ if __name__ == '__main__':
         batch_initial_load(pairs = {"XBT":"USD","ETH":"USD"},
                             sqlite3_dbpath = r".\kraken_ohlcvt_ETH_BTC_ONLY_test.db",
                             historical_file_path =  r"C:\kraken-historical-ohlcvt")
-    main()
+        
+        
+    main(sqlite3_dbpath = r".\kraken_ohlcvt_ETH_BTC_ONLY_test.db",
+         kraken_public_api_intervals = {21600,10080,1440,240,60,15,5,1},
+         pairs = {"XBT":"USD","ETH":"USD"})
